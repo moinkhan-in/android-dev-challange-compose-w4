@@ -10,4 +10,13 @@
       the License.
       -->
     <string name="app_name">AndroidDevChallenge</string>
+    <string name="w_clear">Clear</string>
+    <string name="w_cloudy">Cloudy</string>
+    <string name="w_rainy">Rainy</string>
+    <string name="celsius_unit">°C</string>
+    <string name="fahrenheit_unit">°F</string>
+    <string name="unit_devider">|</string>
+    <string name="temperature">Temperature</string>
+    <string name="precipitation">Precipitation</string>
+    <string name="wind">Wind</string>
 </resources>
