@@ -19,4 +19,6 @@
     <string name="temperature">Temperature</string>
     <string name="precipitation">Precipitation</string>
     <string name="wind">Wind</string>
+    <string name="km_unit">km/h</string>
+    <string name="percentage">%</string>
 </resources>

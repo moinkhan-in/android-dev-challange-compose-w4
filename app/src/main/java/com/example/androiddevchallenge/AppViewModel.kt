@@ -16,7 +16,7 @@ class AppViewModel: ViewModel() {
     val homeDataEvent: MutableLiveData<List<WeatherInfo>> = MutableLiveData()
     val selectedUnitEvent: MutableLiveData<TemperatureUnit> = MutableLiveData()
     val selectedWeatherDayEvent: MutableLiveData<WeatherInfo> = MutableLiveData()
-    val selectedSceneEvent: MutableLiveData<Scene> = MutableLiveData()
+    val selectedAppSceneEvent: MutableLiveData<AppScene> = MutableLiveData()
 
     fun fetchDataForHome() {
         viewModelScope.launch {
@@ -33,20 +33,20 @@ class AppViewModel: ViewModel() {
         selectedWeatherDayEvent.value = newInfo
     }
 
-    fun updateScene(newScene: Scene) {
-        selectedSceneEvent.value = newScene
+    fun updateScene(newAppScene: AppScene) {
+        selectedAppSceneEvent.value = newAppScene
     }
 }
 
-sealed class Scene {
-    object Temperature: Scene()
-    object Precipitation: Scene()
-    object Wind: Scene()
+sealed class AppScene {
+    object Temperature: AppScene()
+    object Precipitation: AppScene()
+    object Wind: AppScene()
 
     fun toDisplay(): Int {
         return when (this) {
-            Precipitation -> R.string.temperature
-            Temperature -> R.string.precipitation
+            Precipitation -> R.string.precipitation
+            Temperature -> R.string.temperature
             Wind -> R.string.wind
         }
     }

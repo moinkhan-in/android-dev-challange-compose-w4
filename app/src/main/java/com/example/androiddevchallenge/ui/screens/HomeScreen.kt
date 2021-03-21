@@ -1,20 +1,24 @@
 package com.example.androiddevchallenge.ui.screens
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ConstraintLayout
+import com.example.androiddevchallenge.AppScene
 import com.example.androiddevchallenge.AppViewModel
-import com.example.androiddevchallenge.Scene
+import com.example.androiddevchallenge.R
 import com.example.androiddevchallenge.data.TemperatureUnit
-import com.example.androiddevchallenge.ui.components.GraphTileList
+import com.example.androiddevchallenge.data.WeatherInfo
+import com.example.androiddevchallenge.ui.components.HomeBottomSheet
 import com.example.androiddevchallenge.ui.components.HomeTile
-import com.example.androiddevchallenge.ui.components.TabBar
-import com.example.androiddevchallenge.ui.components.WeatherTilesList
 
 @Composable
 fun HomeScreen(
@@ -22,60 +26,34 @@ fun HomeScreen(
     viewModel: AppViewModel
 ) {
 
-    val data by viewModel.homeDataEvent.observeAsState()
+    val data by viewModel.homeDataEvent.observeAsState(arrayListOf(WeatherInfo.getWithRandomValues()))
     val selectedUnit = viewModel.selectedUnitEvent.observeAsState(TemperatureUnit.C)
-    val selectedDay by viewModel.selectedWeatherDayEvent.observeAsState()
-    val sceneState = viewModel.selectedSceneEvent.observeAsState(Scene.Temperature)
+    val selectedDay by viewModel.selectedWeatherDayEvent.observeAsState(WeatherInfo.getWithRandomValues())
+    val sceneState = viewModel.selectedAppSceneEvent.observeAsState(AppScene.Temperature)
 
-    ConstraintLayout(
-        modifier.fillMaxSize()
-    ) {
-
-        val (weatherList, mainTile, graph, tabBar) = createRefs()
-
-        selectedDay?.let { item ->
+    val verticalGradientColor = Brush.verticalGradient(listOf(colorResource(id = R.color.blue_top), colorResource(id = R.color.blue_bottom)))
+    ConstraintLayout(modifier.fillMaxSize()) {
+        Column {
             HomeTile(
-                modifier = Modifier.constrainAs(mainTile) {
-                    top.linkTo(parent.top)
-                },
-                data = item,
+                modifier = Modifier
+                    .weight(2.5f)
+                    .background(verticalGradientColor)
+                    .fillMaxWidth(),
+                data = selectedDay,
                 selectedUnit = selectedUnit,
                 onUnitChanged = { viewModel.updateSelectedUnit(it) }
             )
+
+            HomeBottomSheet(
+                modifier = Modifier.weight(1f),
+                data = data,
+                onItemClick = { viewModel.selectedWeatherDayEvent.value = it },
+                onTabSelected = { viewModel.selectedAppSceneEvent.value = it },
+                selectedUnit = selectedUnit,
+                selectedItem = selectedDay,
+                sceneState = sceneState,
+            )
         }
-
-        TabBar(
-            modifier = Modifier.constrainAs(tabBar) {
-                bottom.linkTo(graph.top)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            },
-            onTabItemSelected = { viewModel.selectedSceneEvent.value = it }
-        )
-
-        val allData = data.orEmpty().flatMap { it.allDayData }.toMutableList()
-        GraphTileList(
-            modifier = Modifier.constrainAs(graph) {
-                bottom.linkTo(weatherList.top)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            },
-            items = allData,
-            unit = selectedUnit,
-            state = sceneState
-        )
-
-        WeatherTilesList(
-            modifier = Modifier.constrainAs(weatherList) {
-                bottom.linkTo(parent.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            },
-            data = data.orEmpty(),
-            onTileClick = { viewModel.updateSelectedWeatherDay(it) },
-            selectedUnit = selectedUnit,
-            selectedItem = selectedDay
-        )
     }
 }
 

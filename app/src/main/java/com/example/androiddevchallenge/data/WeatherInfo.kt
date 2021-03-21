@@ -1,10 +1,7 @@
 package com.example.androiddevchallenge.data
 
-import androidx.compose.ui.unit.sp
 import com.example.androiddevchallenge.R
-import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.random.Random
 
 data class WeatherInfo(
@@ -14,7 +11,9 @@ data class WeatherInfo(
     val windDirection: Wind,
     val timeStamp: Long = 0L,
     val type: WeatherType = WeatherType.Clear,
-    val allDayData: ArrayList<WeatherInfo> = arrayListOf()
+    val location: Location = Location("Bardoli", "Gujarat"),
+    val allDayData: ArrayList<WeatherInfo> = arrayListOf(),
+    val precipitation: Int = Random.nextInt(1, 25)
 ) {
 
     companion object {
@@ -33,48 +32,19 @@ data class WeatherInfo(
         }
     }
 
-    fun getWeekDay(format: WeekDayFormat = WeekDayFormat.EEE): String {
-        return SimpleDateFormat(format.getFormat(), Locale.getDefault()).format(Date(timeStamp))
-    }
-
-    fun getDayFormat(format: String = "HH a"): String {
-        return SimpleDateFormat(format, Locale.getDefault()).format(Date(timeStamp))
-    }
-
-    fun fillTodayData(second: WeatherInfo) {
-
-        val tempFraction = (second.temp - temp) / 24f
-        val minTempFraction = (second.min - min) / 24f
-        val maxTempFraction = (second.max - max) / 24f
-        val windSpeedFraction = (second.windDirection.speed - windDirection.speed) / 24f
-        val windDegFraction = (second.windDirection.deg - windDirection.deg) / 24f
-
-
-        val newTime = Calendar.getInstance()
-        newTime.resetTimeToZero()
-        newTime.time = Date(timeStamp)
-
-        repeat(24) {
-            newTime.set(Calendar.HOUR_OF_DAY, it)
-            allDayData.add(
-                copy(
-                    timeStamp = newTime.time.time,
-                    temp = (temp + (tempFraction * it)).toInt(),
-                    min = (min + (minTempFraction * it)).toInt(),
-                    max = (max + (maxTempFraction * it)).toInt(),
-                    windDirection = windDirection.copy(
-                        speed = (windDirection.speed + (windSpeedFraction * it)).toInt(),
-                        deg = (windDirection.deg + (windDegFraction * it)).toInt()
-                    )
-                )
-            )
-        }
-    }
-
     fun displaySpeed(): String {
-        return windDirection.speed.toString().format(" km/h")
+        return "%s km/h".format(windDirection.speed.toString())
+    }
+
+    fun displayPrecipitation(): String {
+        return "$precipitation%"
     }
 }
+
+data class Location(
+    val city: String,
+    val state: String
+)
 
 data class Wind(
     val speed: Int,
@@ -91,22 +61,14 @@ data class Wind(
     }
 }
 
-fun Int.toTemperature(toUnit: TemperatureUnit = TemperatureUnit.C): String {
-    val actualValue = toUnit.toConversion(this).toString().format("%1$4s")
-    val isSign = toUnit != TemperatureUnit.K
-    return "$actualValue${if (isSign) "°" else ""}"
-}
-
 sealed class TemperatureUnit {
     object C : TemperatureUnit()
     object F : TemperatureUnit()
-    object K : TemperatureUnit()
 
     fun toConversion(value: Int): Int {
         return when (this) {
             C -> value
             F -> (value / 5 * 9) + 32
-            K -> value + 273 + 15
         }
     }
 
@@ -114,21 +76,6 @@ sealed class TemperatureUnit {
         return when (this) {
             C -> R.string.celsius_unit
             F -> R.string.fahrenheit_unit
-            K -> R.string.celsius_unit
-        }
-    }
-}
-
-sealed class WeekDayFormat {
-    object EEE : WeekDayFormat()
-    object EEEE : WeekDayFormat()
-    object EEEEE : WeekDayFormat()
-
-    fun getFormat(): String {
-        return when (this) {
-            EEE -> "EEE"
-            EEEE -> "EEEE"
-            EEEEE -> "EEEEE"
         }
     }
 }
@@ -143,6 +90,13 @@ sealed class WeatherType {
             Clear -> R.string.w_clear
             Cloudy -> R.string.w_cloudy
             Rainy -> R.string.w_rainy
+        }
+    }
+
+    fun getIconRes(): Int {
+        return when (this) {
+            Cloudy -> R.drawable.clear_day
+            else -> R.drawable.clear_day
         }
     }
 }

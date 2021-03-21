@@ -29,55 +29,62 @@ private val sansPro = FontFamily(
     Font(R.font.sans_pro_bold, FontWeight.Bold),
 )
 
+private val quickSand = FontFamily(
+    Font(R.font.quicksand_light, FontWeight.Light),
+    Font(R.font.quicksand_regular, FontWeight.Normal),
+    Font(R.font.quicksand_bold, FontWeight.Bold),
+    Font(R.font.quicksand_semi_bold, FontWeight.SemiBold),
+)
+
 // Set of Material typography styles to start with
 val typography = Typography(
 
     h1 = TextStyle(
         fontSize = 48.sp,
         letterSpacing = 1.15.sp,
-        fontFamily = sansPro,
+        fontFamily = quickSand,
         fontWeight = FontWeight.Normal
     ),
 
     h2 = TextStyle(
-        fontSize = 15.sp,
+        fontSize = 18.sp,
         letterSpacing = 1.15.sp,
-        fontFamily = sansPro,
+        fontFamily = quickSand,
         fontWeight = FontWeight.Normal
     ),
 
     h3 = TextStyle(
-        fontSize = 14.sp,
+        fontSize = 16.sp,
         letterSpacing = 0.sp,
-        fontFamily = sansPro,
+        fontFamily = quickSand,
         fontWeight = FontWeight.Bold
     ),
 
     button = TextStyle(
         fontSize = 14.sp,
         letterSpacing = 1.15.sp,
-        fontFamily = sansPro,
+        fontFamily = quickSand,
         fontWeight = FontWeight.Bold,
     ),
 
     caption = TextStyle(
         fontSize = 12.sp,
         letterSpacing = 1.15.sp,
-        fontFamily = sansPro,
+        fontFamily = quickSand,
         fontWeight = FontWeight.Normal
     ),
 
     body1 = TextStyle(
-        fontSize = 14.sp,
+        fontSize = 15.sp,
         letterSpacing = 0.sp,
-        fontFamily = sansPro,
+        fontFamily = quickSand,
         fontWeight = FontWeight.Normal
     ),
 
     body2 = TextStyle(
         fontSize = 14.sp,
         letterSpacing = 0.sp,
-        fontFamily = sansPro,
+        fontFamily = quickSand,
         fontWeight = FontWeight.Light
     ),
 

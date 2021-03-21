@@ -17,26 +17,28 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.unit.dp
-import com.example.androiddevchallenge.Scene
+import com.example.androiddevchallenge.AppScene
+import com.example.androiddevchallenge.data.SimpleDateFormatString
 import com.example.androiddevchallenge.data.TemperatureUnit
 import com.example.androiddevchallenge.data.WeatherInfo
+import com.example.androiddevchallenge.data.getDayFormat
 
 @Composable
 fun GraphTile(
     item: WeatherInfo,
     unit: State<TemperatureUnit>,
-    state: State<Scene>,
+    state: State<AppScene>,
 ) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
         Crossfade(targetState = state.value) {
             when (it) {
-                is Scene.Temperature -> TemperatureTile(unit = unit, item = item)
-                is Scene.Wind -> WindTile(item = item)
+                is AppScene.Temperature -> TemperatureTile(unit = unit, item = item)
+                is AppScene.Wind -> WindTile(item = item)
             }
         }
 
-        Text(text = item.getDayFormat(), style = MaterialTheme.typography.body2)
+        Text(text = item.getDayFormat(SimpleDateFormatString.H_A), style = MaterialTheme.typography.body2)
     }
 }
 
@@ -82,7 +84,7 @@ fun GraphTileList(
     modifier: Modifier = Modifier,
     items: List<WeatherInfo>,
     unit: State<TemperatureUnit>,
-    state: State<Scene>,
+    state: State<AppScene>,
 ) {
 
     val listState = rememberLazyListState()
