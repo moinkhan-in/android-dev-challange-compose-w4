@@ -17,6 +17,7 @@ class AppViewModel: ViewModel() {
     val selectedUnitEvent: MutableLiveData<TemperatureUnit> = MutableLiveData()
     val selectedWeatherDayEvent: MutableLiveData<WeatherInfo> = MutableLiveData()
     val selectedAppSceneEvent: MutableLiveData<AppScene> = MutableLiveData()
+    val isFullDayDataVisibleEvent: MutableLiveData<Boolean> = MutableLiveData(false)
 
     fun fetchDataForHome() {
         viewModelScope.launch {

@@ -48,6 +48,7 @@ sealed class SimpleDateFormatString {
     object EEEEE : SimpleDateFormatString()
     object H_A: SimpleDateFormatString()
     object EEE_DD_mmm: SimpleDateFormatString()
+    object DD_MMM : SimpleDateFormatString()
 
     fun getFormat(): String {
         return when (this) {
@@ -56,6 +57,7 @@ sealed class SimpleDateFormatString {
             EEEEE -> "EEEEE"
             H_A -> "h a"
             EEE_DD_mmm -> "EEE dd MMM"
+            DD_MMM -> "dd MMM"
         }
     }
 }

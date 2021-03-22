@@ -1,15 +1,14 @@
 package com.example.androiddevchallenge.ui.components
 
-import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.*
+import androidx.compose.material.icons.outlined.NearMe
+import androidx.compose.material.icons.outlined.Water
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
@@ -18,7 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -41,14 +39,11 @@ fun HomeTile(
     selectedUnit: State<TemperatureUnit>,
     onUnitChanged: (TemperatureUnit) -> Unit = {},
 ) {
-    ConstraintLayout(
-        modifier = modifier
-            .padding(16.dp),
-    ) {
+
+    ConstraintLayout(modifier = modifier.padding(16.dp),) {
 
         val (locationTile, centeredTile, convertUnit, waterAndAir) = createRefs()
-
-
+        WeatherTypeAnimation(modifier = Modifier.fillMaxSize())
         LocationTile(
             modifier = Modifier.constrainAs(locationTile) {
                 top.linkTo(parent.top)
