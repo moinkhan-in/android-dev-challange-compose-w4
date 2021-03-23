@@ -8,7 +8,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.NearMe
-import androidx.compose.material.icons.outlined.Water
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
@@ -40,7 +39,7 @@ fun HomeTile(
     onUnitChanged: (TemperatureUnit) -> Unit = {},
 ) {
 
-    ConstraintLayout(modifier = modifier.padding(16.dp),) {
+    ConstraintLayout(modifier = modifier.padding(top = 48.dp, start =  16.dp, end = 16.dp, bottom = 16.dp),) {
 
         val (locationTile, centeredTile, convertUnit, waterAndAir) = createRefs()
         WeatherTypeAnimation(modifier = Modifier.fillMaxSize())
@@ -96,7 +95,7 @@ private fun CenteredTile(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        WeatherAnimatedIcon(data = data.type)
+        WeatherLargeIcon(data = data.type)
 
         TemperatureText(
             value = data.temp,
@@ -106,7 +105,7 @@ private fun CenteredTile(
 
         Text(
             text = stringResource(data.type.getLabelResId()),
-            style = MaterialTheme.typography.h2
+            style = MaterialTheme.typography.h2.copy(fontWeight = FontWeight.SemiBold)
         )
     }
 }
@@ -118,12 +117,12 @@ private fun PrecipitationAndWind(
 ) {
     Row(modifier, Arrangement.spacedBy(16.dp)) {
         Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-            Icon(Icons.Outlined.Water, null)
-            Text(text = data.precipitation.toString().format(), style = MaterialTheme.typography.h3)
+            PrecipitationIcon(data = data, resDrawable = R.drawable.baseline_opacity_white_18dp)
+            Text(text = data.displayPrecipitation(), style = MaterialTheme.typography.h3)
         }
 
         Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-            WindIcon(data = data.windDirection)
+            WindIcon(data = data.windDirection, resDrawable = R.drawable.baseline_arrow_right_alt_white_18dp)
             Text(text = data.displaySpeed(), style = MaterialTheme.typography.h3)
         }
     }

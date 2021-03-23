@@ -26,7 +26,9 @@ fun WeatherInfo.fillTodayData(second: WeatherInfo) {
                 windDirection = windDirection.copy(
                     speed = (windDirection.speed + (windSpeedFraction * it)).toInt(),
                     deg = (windDirection.deg + (windDegFraction * it)).toInt()
-                )
+                ),
+                isParentItem = false,
+                allDayData = arrayListOf()
             )
         )
     }

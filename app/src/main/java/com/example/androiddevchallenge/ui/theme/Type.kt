@@ -40,7 +40,7 @@ private val quickSand = FontFamily(
 val typography = Typography(
 
     h1 = TextStyle(
-        fontSize = 48.sp,
+        fontSize = 60.sp,
         letterSpacing = 1.15.sp,
         fontFamily = quickSand,
         fontWeight = FontWeight.Normal

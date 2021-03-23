@@ -21,4 +21,22 @@
 
     <color name="blue_top">#6EB1EF</color>
     <color name="blue_bottom">#4C78BA</color>
+
+
+    <color name="orange_top">#F69D6D</color>
+    <color name="orange_bottom">#F08572</color>
+
+    <color name="gray_top">#DFB298</color>
+    <color name="gray_bottom">#947C66</color>
+
+    <color name="sky_blue_top">#93E7FB</color>
+    <color name="sky_blue_bottom">#72C3F0</color>
+
+    <color name="sunny_top">#EECF63</color>
+    <color name="sunny_bottom">#FBA06D</color>
+
+    <color name="green_top">#D3E09D</color>
+    <color name="green_bottom">#66A58A</color>
+
+
 </resources>

@@ -21,7 +21,8 @@ import com.example.androiddevchallenge.AppScene
 @Composable
 fun AppTabBar(
     modifier: Modifier = Modifier,
-    onTabItemSelected: (AppScene) -> Unit
+    onTabItemSelected: (AppScene) -> Unit,
+    buttonColor: Color
 ) {
     val tabItems = arrayListOf(AppScene.Temperature, AppScene.Wind, AppScene.Precipitation)
 
@@ -39,7 +40,7 @@ fun AppTabBar(
                     .tabIndicatorOffset(tabPositions[tabSelectedIndex])
                     .zIndex(0f)
                     .background(
-                        color = MaterialTheme.colors.primary,
+                        color = buttonColor,
                         shape = MaterialTheme.shapes.large
                     )
                     .height(34.dp)
@@ -74,5 +75,5 @@ fun AppTabBar(
 @Composable
 @Preview
 private fun TabBarPreview() {
-    AppTabBar(onTabItemSelected = { /*TODO*/ })
+    AppTabBar(onTabItemSelected = { /*TODO*/ }, buttonColor = Color.Blue)
 }

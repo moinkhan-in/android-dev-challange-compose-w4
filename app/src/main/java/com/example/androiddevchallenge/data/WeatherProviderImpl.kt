@@ -12,7 +12,7 @@ class WeatherProviderImpl : WeatherProvider {
 
         val listOfItems = arrayListOf<WeatherInfo>()
         repeat(futureDays) {
-            val item = WeatherInfo.getWithRandomValues(today.time.time)
+            val item = WeatherInfo.getWithRandomValues(today.time.time, index = it)
             listOfItems.add(item)
             today.add(Calendar.DAY_OF_YEAR, 1)
         }
@@ -30,3 +30,8 @@ fun Calendar.resetTimeToZero() {
     set(Calendar.MINUTE, 0)
     set(Calendar.SECOND, 0)
 }
+
+fun Calendar.isBeginning() = this.get(Calendar.HOUR_OF_DAY) == 0 && this.get(Calendar.MINUTE) == 0
+
+fun WeatherInfo.isBeginning() =
+    Calendar.getInstance().apply { time = Date(timeStamp) }.isBeginning()

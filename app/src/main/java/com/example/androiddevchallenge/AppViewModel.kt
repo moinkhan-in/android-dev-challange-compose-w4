@@ -3,10 +3,7 @@ package com.example.androiddevchallenge
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.androiddevchallenge.data.TemperatureUnit
-import com.example.androiddevchallenge.data.WeatherInfo
-import com.example.androiddevchallenge.data.WeatherProvider
-import com.example.androiddevchallenge.data.WeatherProviderImpl
+import com.example.androiddevchallenge.data.*
 import kotlinx.coroutines.launch
 
 class AppViewModel: ViewModel() {
@@ -17,7 +14,7 @@ class AppViewModel: ViewModel() {
     val selectedUnitEvent: MutableLiveData<TemperatureUnit> = MutableLiveData()
     val selectedWeatherDayEvent: MutableLiveData<WeatherInfo> = MutableLiveData()
     val selectedAppSceneEvent: MutableLiveData<AppScene> = MutableLiveData()
-    val isFullDayDataVisibleEvent: MutableLiveData<Boolean> = MutableLiveData(false)
+    val updateColorEvent: MutableLiveData<WeatherType> = MutableLiveData()
 
     fun fetchDataForHome() {
         viewModelScope.launch {

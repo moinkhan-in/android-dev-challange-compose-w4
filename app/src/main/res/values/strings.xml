@@ -22,4 +22,12 @@
     <string name="km_unit">km/h</string>
     <string name="percentage">%</string>
     <string name="accessibility_rain_chances">%1$s percentage of rain chances</string>
+    <string name="view_hourly">View Hourly</string>
+    <string name="hide_hourly">Hide Hourly</string>
+    <string name="w_cloud_day_rain">Cloudy day rain</string>
+    <string name="w_cloudy_rain">Clody rain</string>
+    <string name="w_cloudy_day">Cloudy day</string>
+    <string name="w_thunderstorm">Thuderstorm</string>
+    <string name="w_wind">Wind</string>
+    <string name="w_snowy">Snowy</string>
 </resources>
