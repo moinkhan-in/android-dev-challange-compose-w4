@@ -15,14 +15,16 @@
  */
 package com.example.androiddevchallenge.ui.screens
 
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.material.BottomSheetScaffold
 import androidx.compose.material.BottomSheetState
 import androidx.compose.material.BottomSheetValue
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.BottomSheetScaffold
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
@@ -36,7 +38,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.androiddevchallenge.AppScene
 import com.example.androiddevchallenge.AppViewModel
-import com.example.androiddevchallenge.R
 import com.example.androiddevchallenge.data.TemperatureUnit
 import com.example.androiddevchallenge.data.WeatherInfo
 import com.example.androiddevchallenge.ui.components.HomeBottomSheet
@@ -57,15 +58,12 @@ fun HomeScreen(
     val selectedDay by viewModel.selectedWeatherDayEvent.observeAsState(WeatherInfo.getWithRandomValues())
     val sceneState = viewModel.selectedAppSceneEvent.observeAsState(AppScene.Temperature)
 
-    // val selectedDayTransition = updateTransition(targetState = selectedDay)
-    // val animateTopColor by selectedDayTransition.animateColor(transitionSpec = { tween(durationMillis = 3000) })  { colorResource(id = it.type.getGradientColor().first) }
-    //  val animateBottomColor by  selectedDayTransition.animateColor(transitionSpec = { tween(durationMillis = 3000, delayMillis = 1000) })  { colorResource(id = it.type.getGradientColor().second) }
-//
-//    val verticalGradientColor = Brush.verticalGradient(listOf(animateTopColor, animateBottomColor))
-    val verticalGradientColor = Brush.verticalGradient(listOf(colorResource(id = R.color.gray_top), colorResource(id = R.color.gray_bottom)))
+    val animateTopColor = animateColorAsState(targetValue = colorResource(id = selectedDay.type.getGradientColor().first), animationSpec = tween(durationMillis = 3000, delayMillis = 0))
+    val animateBottomColor = animateColorAsState(targetValue = colorResource(id = selectedDay.type.getGradientColor().second), animationSpec = tween(durationMillis = 3000, delayMillis = 1000))
+    val verticalGradientColor =  Brush.verticalGradient(listOf(animateTopColor.value, animateBottomColor.value))
 
-    val bottomSheetScaffoldState =
-        rememberBottomSheetScaffoldState(bottomSheetState = BottomSheetState(BottomSheetValue.Collapsed))
+    val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(bottomSheetState = BottomSheetState(
+        BottomSheetValue.Collapsed))
     val coroutineScope = rememberCoroutineScope()
     BottomSheetScaffold(
         sheetContent = {
@@ -86,7 +84,7 @@ fun HomeScreen(
                     }
                 },
                 isBottomSheetExpanded = bottomSheetScaffoldState.bottomSheetState.isCollapsed,
-                buttonColor = colorResource(id = R.color.gray_bottom)
+                buttonColor = animateBottomColor.value
             )
         },
         sheetPeekHeight = bottomSheetPickHeight,
