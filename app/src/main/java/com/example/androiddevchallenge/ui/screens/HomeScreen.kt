@@ -21,10 +21,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.material.BottomSheetScaffold
 import androidx.compose.material.BottomSheetState
 import androidx.compose.material.BottomSheetValue
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.BottomSheetScaffold
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
@@ -60,10 +60,13 @@ fun HomeScreen(
 
     val animateTopColor = animateColorAsState(targetValue = colorResource(id = selectedDay.type.getGradientColor().first), animationSpec = tween(durationMillis = 3000, delayMillis = 0))
     val animateBottomColor = animateColorAsState(targetValue = colorResource(id = selectedDay.type.getGradientColor().second), animationSpec = tween(durationMillis = 3000, delayMillis = 1000))
-    val verticalGradientColor =  Brush.verticalGradient(listOf(animateTopColor.value, animateBottomColor.value))
+    val verticalGradientColor = Brush.verticalGradient(listOf(animateTopColor.value, animateBottomColor.value))
 
-    val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(bottomSheetState = BottomSheetState(
-        BottomSheetValue.Collapsed))
+    val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
+        bottomSheetState = BottomSheetState(
+            BottomSheetValue.Collapsed
+        )
+    )
     val coroutineScope = rememberCoroutineScope()
     BottomSheetScaffold(
         sheetContent = {
